@@ -1,0 +1,180 @@
+swagger: '2.0'
+info:
+  description: 'API services for Shift Pharmacy '
+  version: 1.0.0
+  title: API Pharmacy Information
+  contact:
+    email: pedro.garcia.ug@gmail.com
+host: 'localhost:8080'
+basePath: /information/pharmacy
+tags:
+  - name: Pharmacy
+    description: 'Pharmacy and Commune information '
+schemes:
+  - http
+paths:
+  /pharmacy:
+    get:
+      tags:
+        - Pharmacy
+      summary: Pharmacy
+      description: Api that returns information from pharmacies on duty
+      operationId: /pharmacy
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: ShiftInformationRQ
+          in: body
+          schema:
+            $ref: '#/definitions/ShiftInformationRQ'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PharmacyData'
+        '204':
+          description: No Content
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /commune:
+    post:
+      tags:
+        - Commune
+      summary: Commune
+      description: Api that returns name of the communes by region
+      operationId: /commune
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - name: CommuneInformationRQ
+          in: body
+          schema:
+            $ref: '#/definitions/CommuneInformationRQ'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/CommuneInformationRS'
+        '204':
+          description: No Content
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+definitions:
+  ShiftInformationRQ:
+    type: object
+    description: Data for pharmacy with filter
+    required:
+      - region_id
+    properties:
+      region_id:
+        type: string
+      filter:
+        type: object
+        items:
+          $ref: '#/definitions/Filter'
+  Filter:
+    type: object
+    description: Pharmacy filter
+    properties:
+      local_nombre:
+        type: string
+      comuna_nombre:
+        type: string
+  PharmacyData:
+    type: object
+    description: Pharmacy data
+    properties:
+      fecha:
+        type: string
+      local_id:
+        type: string
+      local_nombre:
+        type: string
+      comuna_nombre:
+        type: string
+      localidad_nombre:
+        type: string
+      local_direccion:
+        type: string
+      funcionamiento_hora_apertura:
+        type: string
+      funcionamiento_hora_cierre:
+        type: string
+      local_telefono:
+        type: string
+      local_lat:
+        type: string
+      local_lng:
+        type: string
+      funcionamiento_dia:
+        type: string
+      fk_region:
+        type: string
+      fk_comuna:
+        type: string
+  ShiftInformationRS:
+    type: object
+    description: Object that contains the information to return
+    properties:
+      local_nombre:
+        type: string
+      local_direccion:
+        type: string
+      local_telefono:
+        type: string
+      local_lat:
+        type: string
+      local_lng:
+        type: string
+  CommuneInformationRQ:
+    type: object
+    description: Request for communes
+    properties:
+      reg_id:
+        type: string
+  CommuneInformationRS:
+    type: object
+    description: response commune by region
+    properties:
+      response:
+        type: string
+  ErrorResponse:
+    type: object
+    description: Object containing the wrong answers
+    properties:
+      timestamp:
+        type: string
+      status:
+        type: string
+      error:
+        type: string
+      message:
+        type: string
