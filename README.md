@@ -9,6 +9,8 @@ rest service that returns pharmacies on duty with filters
 * method: Get
 * path: /information/pharmacy
 
+> Header Content-Type: application/json
+
 {
 	"region_id": "7",
 	"filter": {
@@ -21,6 +23,8 @@ rest service that returns pharmacies on duty with filters
 * commune
 * method: Post
 * path: /information/commune
+
+> Header Content-Type: application/json
 
 {
 	"reg_id": "7"
