@@ -29,7 +29,7 @@ public class CommuneController extends BaseController {
         this.service = service;
     }
 
-    @PostMapping(value = "information/commune", consumes = "multipart/form-data", produces = "application/json")
+    @PostMapping(value = "information/commune", consumes = "application/json", produces = "text/html")
     public ResponseEntity<String> communes(@Valid @RequestBody CommuneInformationRQ rq) throws IOException {
         log.info(Constants.API_REQUEST, rq);
         String response = service.communeData(rq);
